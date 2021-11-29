@@ -1,0 +1,237 @@
+------------------create table Locker-------------------
+
+create table Locker(
+Locker_no        number(3) primary key ,
+Locker_location  varchar2(30),
+member_no        number(3),
+constraint member_fk foreign key (member_no) references member_T (member_no));
+
+
+-------------------insert into table in Locker -------------------
+
+
+insert into Locker values (213,'In room number 6',001);
+insert into Locker values (749,'In room number 5',002);
+insert into Locker values (214,'In room number 6',003);
+insert into Locker values (754,'In room number 5',004);
+insert into Locker values (245,'In room number 3',005);
+
+------------------- create table Member-------------------
+
+create table  member_T (
+member_no               number(3) primary key,
+Subscription_period     DATE,
+first_name              varchar2(10),
+last_name               varchar2(10),
+Date_of_Birth           date,
+age                     number(3)  ,
+email                   varchar2(30),
+addres                  varchar2(30),
+city                    varchar2(20),
+posit_code              number(6),
+phone                   number(10),
+Trainer_ID              number(5),
+constraint trainer_fk foreign key (Trainer_ID) references TRAINER_T (Trainer_ID));
+
+
+-------------------insert into table in member_T -------------------
+
+insert into member_T values (001,to_date('11-11-2021','DD-MM-YYYY'),'Ahmed','Ail',to_date('11-12-1999','DD-MM-YYYY'),22,'ahmed@gmail.com','alrabuah','jeddah',200511,0551448376,20011);
+
+insert into member_T values (002,to_date('11-10-2021','DD-MM-YYYY'),'zaki','mohamed',to_date('11-12-1985','DD-MM-YYYY'),36,'zaki@gmail.com','alrabuah','jeddah',200501,0551448375,20012);
+
+insert into member_T values (003,to_date('11-10-2021','DD-MM-YYYY'),'mohamed','khailed',to_date('11-12-2000','DD-MM-YYYY'),21,'mohamed@gmail.com','alsafa','jeddah',200561,0551446376,20013);
+
+insert into member_T values (004,to_date('1-3-2021','DD-MM-YYYY'),'ail','salah',to_date('11-12-1998','DD-MM-YYYY'),23,'ail@gmail.com','alfaisaliyah','jeddah',200551,0541448376,20014);
+
+insert into member_T values (005,to_date('11-11-2021','DD-MM-YYYY'),'Nawaf','zaki',to_date('21-10-2001','DD-MM-YYYY'),20,'Nawaf@gmail.com','alfaisaliyah','jeddah',205571,0551448371,20015);
+
+
+-------------------create table trainer-------------------
+
+create table TRAINER_T
+(
+Trainer_ID        number(5) primary key,
+Name_Trainer      varchar2(20),
+Brith_date        date,
+Age               number(2),
+Experiences       varchar2(20),
+Email             varchar2(20),
+Phone             number(10)
+);
+
+
+--_____insert into table in TRAINER_____________
+
+insert into TRAINER_T values
+(20011,'Mohammed',To_date('10-01-1996','DD-MM-YYYY'),25,'flexibility-fitness','mo123@gmail.com',0500005000);
+
+insert into TRAINER_T values
+(20012,'Ahamed',To_date('10-01-1990','DD-MM-YYYY'),31,'flexibility-fitness','AHH123@gmail.com',0500006000);
+
+insert into TRAINER_T values
+(20013,'Hassan',To_date('10-01-1993','DD-MM-YYYY'),28,'flexibility-speed','HHA123@gmail.com',0500007000);
+
+insert into TRAINER_T values
+(20014,'Mohammed',To_date('10-01-1990','DD-MM-YYYY'),31,'Speed-fitness','MOH123@gmail.com',0500008000);
+
+insert into TRAINER_T values
+(20014,'Mohammed',To_date('10-02-1991','DD-MM-YYYY'),30,'Speed-fitness','MOH123@gmail.com',0500008000);
+
+insert into TRAINER_T values
+(20015,'Omar',To_date('10-03-1992','DD-MM-YYYY'),29,'Speed-fitness','Om123@gmail.com',0500009000);
+
+
+
+-------------------create table Skill-------------------
+
+
+CREATE TABLE skill(
+Trainer_ID   integer,
+constraint tr_fk primary key(Trainer_ID  ) references TRAINER_T (Trainer_ID  ),
+skl VARCHAR2(30) primary key 
+);
+
+-------------------insert into table in Skill -------------------
+
+
+insert into skill values(20011,'endurance');
+insert into skill values(20011,'strength');
+insert into skill values(20015,'flexibility');
+insert into skill values(20012,'power');
+insert into skill values(20012,'speed.');
+insert into skill values(20013,' balance');
+insert into skill values(20013,'accuracy');
+insert into skill values(20014,'endurance');
+insert into skill values(20014,'stamina');
+insert into skill values(20015,'cardiorespiratory');
+
+
+-------------------create table payment-------------------
+
+CREATE TABLE payment(
+pm_NO integer primary key,
+amount integer, 
+sdate DATE,
+edate DATE, 
+duration_ VARCHAR2(30),
+member_NO number(3),
+constraint fk_mem foreign key (member_NO) references member_T (member_NO),
+Classes_NO integer, 
+constraint fk_cla foreign key (Classes_NO) references  CLASSES (Classes_NO));
+
+
+-------------------insert into table in payment -------------------
+
+
+INSERT INTO payment VALUES(1,500,TO_DATE('1/1/2021','DD/MM/YYYY'),TO_DATE('1/2/2021','DD/MM/YYYY'),'MONTH',001,100);
+
+INSERT INTO payment VALUES(2,1000,TO_DATE('15/6/2021','DD/MM/YYYY'),TO_DATE('15/8/2021','DD/MM/YYYY'),'2 MONTH',003,300);
+
+INSERT INTO payment VALUES(3,1000,TO_DATE('5/12/2021','DD/MM/YYYY'),TO_DATE('5/2/2021','DD/MM/YYYY'),'2 MONTH',004,300);
+
+INSERT INTO payment VALUES(4,1500,TO_DATE('24/7/2021','DD/MM/YYYY'),TO_DATE('24/10/2021','DD/MM/YYYY'),'3 MONTH',005,400);
+
+INSERT INTO payment VALUES(5,2000,TO_DATE('19/5/2021','DD/MM/YYYY'),TO_DATE('19/9/2021','DD/MM/YYYY'),'4 MONTH',002,500);
+
+
+-------------------create table CLASSES -------------------
+
+--____create table CLASSES _______________
+
+create table CLASSES
+(
+Classes_NO          number(3) primary key , 
+Class_Name          varchar2(20),
+Day_classes         varchar(24),
+Time_classes        varchar(20),
+Numder_OF_Member    number(2),
+Trainer_ID          number(5), 
+constraint Classes_fk foreign key (Trainer_ID)references TRAINER_T(Trainer_ID));
+
+
+
+
+--_____insert into table in CLASSES_____________
+
+insert into CLASSES values
+(100,'weight lifting','sunday,tuesday,thursday','9:00PM',10,20011);
+
+insert into CLASSES values
+(200,'zumba dance','sunday, tuesday,thursday','11:00PM',09,20013);
+
+insert into CLASSES values
+(300,'swimming','sunday, tuesday,thursday','7:00PM',10,20014);
+
+insert into CLASSES values
+(400,'weight lifting','monday,wednesday','10:00PM',11,20014);
+
+insert into CLASSES values
+(500,'swimming','monday,wednesday','8:00PM',15,20012);
+
+
+
+--------Queries------
+
+SELECT * FROM Locker  
+ORDER BY Locker_location;
+
+select Locker_location,member_no
+FROM Locker
+WHERE Locker_location='In room number 6';
+
+select Subscription_period,first_name,Trainer_ID
+from member_T
+order by Subscription_period;
+
+
+
+
+select Trainer_ID , Name_Trainer,Age              
+from TRAINER_T
+order by Age ;
+
+select classes_NO,Time_classes ,Day_classes,Class_Name
+from CLASSES
+where    classes_NO<=300;
+
+
+select MIN(amount) 
+AS smallestAmount
+from payment;
+
+select AVG(amount)
+from payment
+
+-------Subquery:-------
+
+select sdate, edate
+from payment
+where amount > (select amount
+            from payment
+            where amount = 1500);
+
+select member_NO, Classes_NO
+from payment
+where duration_ IN (select duration_
+            from payment
+            where duration_ = '2 MONTH');
+
+select tr_ID, skl
+from skill
+where skl IN (select skl
+            from skill
+            where skl LIKE 'e%');
+
+select tr_ID, skl
+from skill
+where skl IN (select skl
+            from skill
+            where skl = 'stamina');
+--------------------------------------------------
+     select * from Locker;
+     select * from member_T;
+     select * from payment;
+     select * from TRAINER_T;
+     select * from skill;
+     select * from CLASSES;
